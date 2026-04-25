@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Користувачі з MongoDB Atlas</h1>
+
+    <% if (users.length > 0) { %>
+      <ul class="card-list">
+        <% users.forEach((user) => { %>
+          <li class="card">
+            <h2><%= user.name %></h2>
+            <p>Email: <%= user.email %></p>
+            <p>Age: <%= user.age %></p>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <div class="card">
+        <h2>Дані не знайдено</h2>
+        <p>У колекції поки немає користувачів.</p>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

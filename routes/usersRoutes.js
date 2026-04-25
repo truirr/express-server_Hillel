@@ -7,13 +7,19 @@ import {
   deleteUserByIdRoute,
 } from '../controllers/usersController.js';
 
+import { authMiddleware } from '../middlewares/authMiddleware.js';
+import {
+  validateUserData,
+  validateUserId,
+} from '../middlewares/validationMiddleware.js';
+
 const router = Router();
 
-router.get('/', getUsersRoute);
-router.post('/', postUsersRoute);
+router.get('/', authMiddleware, getUsersRoute);
+router.post('/', authMiddleware, validateUserData, postUsersRoute);
 
-router.get('/:userId', getUserByIdRoute);
-router.put('/:userId', putUserByIdRoute);
-router.delete('/:userId', deleteUserByIdRoute);
+router.get('/:userId', authMiddleware, validateUserId, getUserByIdRoute);
+router.put('/:userId', authMiddleware, validateUserId, putUserByIdRoute);
+router.delete('/:userId', authMiddleware, validateUserId, deleteUserByIdRoute);
 
 export default router;

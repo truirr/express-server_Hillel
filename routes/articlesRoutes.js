@@ -7,13 +7,18 @@ import {
   deleteArticleByIdRoute,
 } from '../controllers/articlesController.js';
 
+import {
+  articleAccessMiddleware,
+  validateArticleId,
+} from '../middlewares/articleAccessMiddleware.js';
+
 const router = Router();
 
-router.get('/', getArticlesRoute);
-router.post('/', postArticlesRoute);
+router.get('/', articleAccessMiddleware, getArticlesRoute);
+router.post('/', articleAccessMiddleware, postArticlesRoute);
 
-router.get('/:articleId', getArticleByIdRoute);
-router.put('/:articleId', putArticleByIdRoute);
-router.delete('/:articleId', deleteArticleByIdRoute);
+router.get('/:articleId', articleAccessMiddleware, validateArticleId, getArticleByIdRoute);
+router.put('/:articleId', articleAccessMiddleware, validateArticleId, putArticleByIdRoute);
+router.delete('/:articleId', articleAccessMiddleware, validateArticleId, deleteArticleByIdRoute);
 
 export default router;

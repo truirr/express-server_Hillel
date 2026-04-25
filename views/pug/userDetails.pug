@@ -1,0 +1,22 @@
+doctype html
+html(lang="uk")
+  head
+    meta(charset="UTF-8")
+    title= title
+    link(rel="stylesheet", href="/styles.css")
+    link(rel="icon", href="/favicon.ico")
+  body
+    .container
+      h1 Деталі користувача
+
+      if user
+        .card
+          h2= user.name
+          p ID: #{user.id}
+          p Email: #{user.email}
+      else
+        .card
+          h2 Користувача не знайдено
+          p ID: #{userId}
+
+      a.back-link(href="/users") Назад до користувачів
