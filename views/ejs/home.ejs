@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="<%= theme %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('partials-header') %>
+
+  <main class="hero">
+    <section class="hero-card">
+      <p class="eyebrow">Фінальний проект</p>
+      <h1>Tasks Manager для портфоліо</h1>
+      <p>Створюй задачі, редагуй статус, пріоритет, дедлайн і керуй власним списком справ через фронт та REST API.</p>
+      <div class="actions">
+        <a class="primary-button" href="/auth/register">Почати</a>
+        <a class="secondary-button" href="/auth/login">У мене є акаунт</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

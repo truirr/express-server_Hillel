@@ -1,19 +1,26 @@
 {
-  "name": "express-server-oleg",
+  "name": "tasks-manager-oleg",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
-  "main": "index.js",
+  "description": "Full-stack Tasks Manager project with Express, MongoDB Atlas, Passport, sessions, cookies and REST API",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "express",
+    "mongodb",
+    "tasks-manager",
+    "passport",
+    "mvc"
+  ],
+  "author": "Oleg",
   "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
-    "ejs": "^5.0.2",
+    "ejs": "^3.1.10",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "jsonwebtoken": "^9.0.3",

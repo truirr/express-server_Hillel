@@ -1,9 +1,8 @@
 import { Router } from 'express';
-import { getRootRoute } from '../controllers/homeController.js';
-import { loggerMiddleware } from '../middlewares/loggerMiddleware.js';
+import { getHomePage } from '../controllers/homeController.js';
 
 const router = Router();
 
-router.get('/', loggerMiddleware, getRootRoute);
+router.get('/', getHomePage);
 
 export default router;

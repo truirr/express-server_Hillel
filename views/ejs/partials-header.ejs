@@ -1,0 +1,20 @@
+<header class="site-header">
+  <a class="logo" href="/">Tasks Manager</a>
+  <nav>
+    <% if (currentUser) { %>
+      <a href="/tasks">Мої задачі</a>
+      <a href="/tasks/stats">Статистика</a>
+      <a href="/protected">Protected JSON</a>
+      <form class="inline-form" action="/settings/theme" method="POST">
+        <input type="hidden" name="theme" value="<%= theme === 'dark' ? 'light' : 'dark' %>">
+        <button type="submit"><%= theme === 'dark' ? 'Light' : 'Dark' %></button>
+      </form>
+      <form class="inline-form" action="/auth/logout" method="POST">
+        <button type="submit">Вийти</button>
+      </form>
+    <% } else { %>
+      <a href="/auth/login">Вхід</a>
+      <a class="button-link" href="/auth/register">Реєстрація</a>
+    <% } %>
+  </nav>
+</header>

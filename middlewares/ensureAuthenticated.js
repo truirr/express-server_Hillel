@@ -3,5 +3,9 @@ export function ensureAuthenticated(req, res, next) {
     return next();
   }
 
-  return res.status(401).send('Unauthorized. Please login first.');
+  if (req.originalUrl.startsWith('/api/')) {
+    return res.status(401).json({ message: 'Unauthorized. Please login first.' });
+  }
+
+  return res.redirect('/auth/login');
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="<%= theme %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('partials-header') %>
+
+  <main class="dashboard">
+    <section class="page-title">
+      <p class="eyebrow">Привіт, <%= currentUser.name %></p>
+      <h1>Мої задачі</h1>
+    </section>
+
+    <section class="task-layout">
+      <form class="task-form" action="/tasks" method="POST">
+        <h2>Нова задача</h2>
+        <label>Назва<input name="title" type="text" required placeholder="Наприклад: Закінчити проект"></label>
+        <label>Опис<textarea name="description" rows="4" placeholder="Деталі задачі"></textarea></label>
+        <div class="two-columns">
+          <label>Статус
+            <select name="status">
+              <option value="todo">To do</option>
+              <option value="in-progress">In progress</option>
+              <option value="done">Done</option>
+            </select>
+          </label>
+          <label>Пріоритет
+            <select name="priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+        </div>
+        <label>Дедлайн<input name="dueDate" type="date"></label>
+        <button class="primary-button" type="submit">Додати задачу</button>
+      </form>
+
+      <section class="tasks-section">
+        <div class="filter-row">
+          <a class="filter <%= selectedStatus === '' ? 'active' : '' %>" href="/tasks">Всі</a>
+          <a class="filter <%= selectedStatus === 'todo' ? 'active' : '' %>" href="/tasks?status=todo">To do</a>
+          <a class="filter <%= selectedStatus === 'in-progress' ? 'active' : '' %>" href="/tasks?status=in-progress">In progress</a>
+          <a class="filter <%= selectedStatus === 'done' ? 'active' : '' %>" href="/tasks?status=done">Done</a>
+        </div>
+
+        <% if (tasks.length > 0) { %>
+          <ul class="task-list">
+            <% tasks.forEach((task) => { %>
+              <li class="task-card">
+                <div>
+                  <span class="badge"><%= task.status %></span>
+                  <span class="badge priority"><%= task.priority %></span>
+                  <h2><a href="/tasks/<%= task.id %>"><%= task.title %></a></h2>
+                  <p><%= task.description || 'Без опису' %></p>
+                  <% if (task.dueDate) { %>
+                    <small>Дедлайн: <%= task.dueDate.toISOString().slice(0, 10) %></small>
+                  <% } %>
+                </div>
+                <form action="/tasks/<%= task.id %>/delete" method="POST">
+                  <button class="danger-button" type="submit">Видалити</button>
+                </form>
+              </li>
+            <% }) %>
+          </ul>
+        <% } else { %>
+          <div class="empty-card">
+            <h2>Поки задач немає</h2>
+            <p>Створи першу задачу зліва.</p>
+          </div>
+        <% } %>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

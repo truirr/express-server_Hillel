@@ -1,10 +1,9 @@
 import { Router } from 'express';
-import { saveTheme, getTheme } from '../controllers/settingsController.js';
-import { jwtMiddleware } from '../middlewares/jwtMiddleware.js';
+import { getTheme, saveTheme } from '../controllers/settingsController.js';
 
 const router = Router();
 
-router.post('/theme', jwtMiddleware, saveTheme);
 router.get('/theme', getTheme);
+router.post('/theme', saveTheme);
 
 export default router;

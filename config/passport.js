@@ -1,7 +1,6 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-
-const users = [];
+import UserModel from '../models/UserModel.js';
 
 passport.use(
   new LocalStrategy(
@@ -9,16 +8,18 @@ passport.use(
       usernameField: 'email',
       passwordField: 'password',
     },
-    (email, password, done) => {
-      const user = users.find(
-        (item) => item.email === email && item.password === password
-      );
+    async (email, password, done) => {
+      try {
+        const user = await UserModel.findOne({ email: email.toLowerCase() });
 
-      if (!user) {
-        return done(null, false, { message: 'Invalid email or password' });
+        if (!user || !user.validatePassword(password)) {
+          return done(null, false, { message: 'Invalid email or password' });
+        }
+
+        return done(null, user);
+      } catch (error) {
+        return done(error);
       }
-
-      return done(null, user);
     }
   )
 );
@@ -27,31 +28,13 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
-  const user = users.find((item) => item.id === id);
-
-  if (!user) {
-    return done(null, false);
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await UserModel.findById(id);
+    done(null, user || false);
+  } catch (error) {
+    done(error);
   }
-
-  return done(null, user);
 });
-
-export function addUser(email, password) {
-  const existingUser = users.find((user) => user.email === email);
-
-  if (existingUser) {
-    return null;
-  }
-
-  const newUser = {
-    id: Date.now().toString(),
-    email,
-    password,
-  };
-
-  users.push(newUser);
-  return newUser;
-}
 
 export default passport;

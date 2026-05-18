@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="<%= theme %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('partials-header') %>
+
+  <main class="dashboard">
+    <section class="page-title">
+      <p class="eyebrow">MongoDB Aggregation</p>
+      <h1>Статистика задач</h1>
+      <p>Дані нижче рахуються через aggregation pipeline у MongoDB Atlas.</p>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card">
+        <span>Всього задач</span>
+        <strong><%= stats.totalTasks %></strong>
+      </article>
+      <article class="stat-card">
+        <span>Виконано</span>
+        <strong><%= stats.completedTasks %></strong>
+      </article>
+      <article class="stat-card">
+        <span>Активні</span>
+        <strong><%= stats.activeTasks %></strong>
+      </article>
+      <article class="stat-card">
+        <span>Прострочені</span>
+        <strong><%= stats.overdueTasks %></strong>
+      </article>
+      <article class="stat-card">
+        <span>Унікальних статусів</span>
+        <strong><%= stats.uniqueStatusesCount %></strong>
+      </article>
+      <article class="stat-card">
+        <span>Унікальних пріоритетів</span>
+        <strong><%= stats.uniquePrioritiesCount %></strong>
+      </article>
+    </section>
+
+    <section class="task-layout stats-layout">
+      <article class="empty-card align-left">
+        <h2>Кількість за статусами</h2>
+        <% if (stats.byStatus.length > 0) { %>
+          <ul class="simple-list">
+            <% stats.byStatus.forEach((item) => { %>
+              <li><span><%= item._id %></span><strong><%= item.count %></strong></li>
+            <% }) %>
+          </ul>
+        <% } else { %>
+          <p>Поки немає задач для статистики.</p>
+        <% } %>
+      </article>
+
+      <article class="empty-card align-left">
+        <h2>Кількість за пріоритетами</h2>
+        <% if (stats.byPriority.length > 0) { %>
+          <ul class="simple-list">
+            <% stats.byPriority.forEach((item) => { %>
+              <li><span><%= item._id %></span><strong><%= item.count %></strong></li>
+            <% }) %>
+          </ul>
+        <% } else { %>
+          <p>Поки немає задач для статистики.</p>
+        <% } %>
+      </article>
+    </section>
+
+    <div class="actions">
+      <a class="secondary-button" href="/tasks">Назад до задач</a>
+      <a class="primary-button" href="/api/tasks/stats">API статистики</a>
+    </div>
+  </main>
+</body>
+</html>

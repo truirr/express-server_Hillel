@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="<%= theme %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('partials-header') %>
+
+  <main class="auth-page">
+    <form class="auth-card" action="/auth/register" method="POST">
+      <h1>Реєстрація</h1>
+      <% if (error) { %>
+        <p class="error"><%= error %></p>
+      <% } %>
+      <label>Імʼя<input name="name" type="text" required></label>
+      <label>Email<input name="email" type="email" required></label>
+      <label>Пароль<input name="password" type="password" required></label>
+      <button class="primary-button" type="submit">Створити акаунт</button>
+      <p>Вже є акаунт? <a href="/auth/login">Увійти</a></p>
+    </form>
+  </main>
+</body>
+</html>

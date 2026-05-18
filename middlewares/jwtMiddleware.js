@@ -1,19 +1,18 @@
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = 'secret_key_for_homework';
-
 export function jwtMiddleware(req, res, next) {
-  const token = req.cookies.token;
+  const authHeader = req.headers.authorization;
+  const cookieToken = req.cookies.token;
+  const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : cookieToken;
 
   if (!token) {
-    return res.status(401).send('Access denied. No token provided.');
+    return res.status(401).json({ message: 'Access denied. No token provided.' });
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;
+    req.jwtUser = jwt.verify(token, process.env.JWT_SECRET || 'tasks_manager_jwt_secret');
     next();
   } catch (error) {
-    return res.status(403).send('Invalid or expired token.');
+    return res.status(403).json({ message: 'Invalid or expired token.' });
   }
 }

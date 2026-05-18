@@ -1,3 +1,10 @@
 export function getProtectedRoute(req, res) {
-  res.send(`Protected route. Hello, ${req.user.email}`);
+  res.json({
+    message: 'Protected route works.',
+    user: {
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+    },
+  });
 }

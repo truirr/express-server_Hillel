@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="<%= theme %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('partials-header') %>
+
+  <main class="auth-page wide">
+    <form class="auth-card" action="/tasks/<%= task.id %>/update" method="POST">
+      <a href="/tasks">← Назад</a>
+      <h1>Редагування задачі</h1>
+      <label>Назва<input name="title" type="text" value="<%= task.title %>" required></label>
+      <label>Опис<textarea name="description" rows="5"><%= task.description %></textarea></label>
+      <div class="two-columns">
+        <label>Статус
+          <select name="status">
+            <option value="todo" <%= task.status === 'todo' ? 'selected' : '' %>>To do</option>
+            <option value="in-progress" <%= task.status === 'in-progress' ? 'selected' : '' %>>In progress</option>
+            <option value="done" <%= task.status === 'done' ? 'selected' : '' %>>Done</option>
+          </select>
+        </label>
+        <label>Пріоритет
+          <select name="priority">
+            <option value="low" <%= task.priority === 'low' ? 'selected' : '' %>>Low</option>
+            <option value="medium" <%= task.priority === 'medium' ? 'selected' : '' %>>Medium</option>
+            <option value="high" <%= task.priority === 'high' ? 'selected' : '' %>>High</option>
+          </select>
+        </label>
+      </div>
+      <label>Дедлайн
+        <input name="dueDate" type="date" value="<%= task.dueDate ? task.dueDate.toISOString().slice(0, 10) : '' %>">
+      </label>
+      <button class="primary-button" type="submit">Зберегти</button>
+    </form>
+  </main>
+</body>
+</html>

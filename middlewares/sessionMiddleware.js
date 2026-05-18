@@ -1,8 +1,6 @@
 export function sessionMiddleware(req, res, next) {
-  req.customSessionInfo = {
-    startedAt: new Date().toISOString(),
-    userAgent: req.headers['user-agent'] || 'Unknown',
-  };
-
+  res.locals.currentUser = req.user || null;
+  res.locals.theme = req.cookies.theme || 'light';
+  res.locals.currentPath = req.path;
   next();
 }
