@@ -1,0 +1,28 @@
+services:
+  app:
+    build: .
+    container_name: tasks-manager-app
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongo:27017/tasks_manager
+      SESSION_SECRET: docker_session_secret
+      JWT_SECRET: docker_jwt_secret
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+
+  mongo:
+    image: mongo
+    container_name: tasks-manager-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
